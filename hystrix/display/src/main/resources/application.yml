@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: display
+
+# hystrix 설정
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000 # default 1000ms
+      circuitBreaker:
+        requestVolumeThreshold: 10 # default 20
+        errorThresholdPercentage: 50 # default 50
+
+# ribbon설정(default round robin방식)
+product:
+  ribbon:
+# listOfServers가 없는 경우 자동으로 Eureka Server에서 Server List 가져옴
+#    listOfServers: localhost:8082, localhost:7777
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+
+eureka:
+  instance:
+    prefer-ip-address: true # ip address base 등록
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka  # default address
