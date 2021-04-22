@@ -1,5 +1,6 @@
 package com.jsh.hystrix.api;
 
+import com.jsh.hystrix.service.FeignProductRemoteService;
 import com.jsh.hystrix.service.ProductRemoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,10 @@ public class DisplayController {
     @Autowired
     private ProductRemoteService productRemoteService;
 
+    @Autowired
+    private FeignProductRemoteService feignProductRemoteService;
+
+
     @GetMapping(path = "/{displayId}")
     public String getDisplayDetail(@PathVariable String displayId){
         String productInfo  = getProductInfo();
@@ -21,6 +26,7 @@ public class DisplayController {
     }
 
     private String getProductInfo(){
-        return productRemoteService.getProductInfo("12345");
+//        return productRemoteService.getProductInfo("12345");
+        return feignProductRemoteService.getProductInfo("12345");
     }
 }

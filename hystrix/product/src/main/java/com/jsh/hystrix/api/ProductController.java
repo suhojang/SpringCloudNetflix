@@ -13,6 +13,7 @@ public class ProductController {
     @GetMapping(path = "{productId}")
     public String getProductInfo(@PathVariable String productId){
 //        throw new RuntimeException("I/O Exception");
+        log.info("productId = " + productId);
         return "[product id = " + productId + " at " + System.currentTimeMillis() + "]";
     }
 }
