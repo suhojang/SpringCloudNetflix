@@ -13,8 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * default 로드밸런싱(Eureka의 Ribbon)
  * 직접 url지정을 원할 경우는 @FeignClient(name = "product", url= "지정 url")형태로 사용
  * 다른 Application과 통신을 할 때 유용
+ *
+ * Zuul Api Gateway Server 송신하는 방식
+ * @FeignClient(name = "[zuul server의 application name]", fallbackFactory = FeignProductRemoteServiceFallbackFactory.class)
+ *
+ * eureka server를 통해 송신하는 방식
+ * @FeignClient(name = "[eureka server에 등록 된 application name]", fallbackFactory = FeignProductRemoteServiceFallbackFactory.class)
  */
-@FeignClient(name = "product", fallbackFactory = FeignProductRemoteServiceFallbackFactory.class)
+//@FeignClient(name = "product", fallbackFactory = FeignProductRemoteServiceFallbackFactory.class)
+@FeignClient(name = "zuul", fallbackFactory = FeignProductRemoteServiceFallbackFactory.class)
 public interface FeignProductRemoteService {
     @RequestMapping("/products/{productId}")
     String getProductInfo(@PathVariable("productId") String productId);

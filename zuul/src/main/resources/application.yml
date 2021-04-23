@@ -1,0 +1,93 @@
+spring:
+  application:
+    name: zuul
+#  profiles:
+#    active: default         # 서비스가 실행할 기본 프로파일
+#    cloud:
+#      config:
+#        uri: http://localhost:8889  # Config Server 위치
+# cloud config git주소에 [서비스 ID]폴더 생성 후  profile생성
+
+server:
+  port: 8765
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+
+zuul:
+# ignored-services: 'product'   # 자동 경로 매핑 무시, 쉼표로 한 번에 여러 서비스 제외 가능
+  ignored-services: '*'   # 유레카 기반 모든 경로 제외
+# prefix: /api            # 정의한 모든 서비스에 /api 접두어
+  routes:
+    product:
+      path: /products/**
+      serviceId: product
+      stripPrefix: false
+    display:
+      path: /displays/**
+      serviceId: display
+      stripPrefix: false
+  ribbon-isolation-strategy: thread
+  thread-pool:
+    use-separate-thread-pools: true
+    thread-pool-key-prefix: zuul-
+
+eureka:
+  instance:
+    non-secure-port: ${server.port}
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true # Eureka Server에 서비스 등록
+    fetch-registry: true # 레지스트리 정보를 로컬에 캐싱
+    service-url:
+      defaultZone: http://localhost:8761/eureka, http://localhost:8762/eureka
+
+# apllication 별 hystrix설정
+hystrix:
+  command:
+# default hystrix 설정
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+# application 별 hytrix 설정
+    product:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 12000 # hystrix timeout 12sec로 설정 (default 1sec, ribbon 의 timeout 보다 커야 기대하는 대로 동작함)
+# application 별 threadpool 설정
+# 위에 정의 한 thread-pool-key-prefix 명 뒤에 zuul routes명이 붙는다.
+  threadpool:
+    zuul-product:
+      coreSize: 1
+      maximumSize: 2
+      allowMaximumSizeToDivergeFromCoreSize: true
+    zuul-display:
+      coreSize: 1
+      maximumSize: 2
+      allowMaximumSizeToDivergeFromCoreSize: true
+
+# application 별 ribbon timeout 설정
+product:
+  ribbon:
+    MaxAutoRetriesNextServer: 1
+    ReadTimeout: 3000
+    ConnectTimeout: 3000
+    MaxTotalConnections: 30
+    MaxConnectionsPerHost: 10
+
+display:
+  ribbon:
+    MaxAutoRetriesNextServer: 1
+    ReadTimeout: 3000
+    ConnectTimeout: 3000
+    MaxTotalConnections: 30
+    MaxConnectionsPerHost: 10

@@ -7,4 +7,10 @@ spring:
 
 eureka:
   instance:
+    hostname: localhost
     prefer-ip-address: true
+  client:
+    register-with-eureka: true # false 자기 자신을 서비스에 등록하지 않는다. true 자기 자신에게 계속 Health check를 하게 됨
+    fetch-registry: true # 로컬 캐싱여부
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

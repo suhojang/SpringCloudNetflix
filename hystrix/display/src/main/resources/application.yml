@@ -50,7 +50,7 @@ eureka:
     prefer-ip-address: true # ip address base 등록
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka  # default address
+      defaultZone: http://127.0.0.1:8761/eureka, http://localhost:8762/eureka  # default address
 
 feign:
   hystrix:
