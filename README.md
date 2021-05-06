@@ -513,11 +513,11 @@ public class ZuulApplication {
 
 + Eureka 서버1
 
-![eureka-1.png](https://github.com/suhojang/SpringCloudNetflix/eureka-1.png)
+![eureka-1.png](https://github.com/suhojang/SpringCloudNetflix/blob/master/eureka-1.png)
 
 + Eureka 서버2
 
-![eureka-2.png](https://github.com/suhojang/SpringCloudNetflix/eureka-2.png)
+![eureka-2.png](https://github.com/suhojang/SpringCloudNetflix/blob/master/eureka-2.png)
 
 
 위 그림을 보면 Eureka 서버1(8761)에 Eureka Client들이 붙은 걸 확인 할 수 있다.   
@@ -585,12 +585,12 @@ Eureka 서버2(8762)로 retry하는 걸 볼 수 있다.
 
 + Eureka 서버1을 임의로 Down 후 Eureka 서버2의 모습
 
-![eureka-3.png](https://github.com/suhojang/SpringCloudNetflix/eureka-3.png)
+![eureka-3.png](https://github.com/suhojang/SpringCloudNetflix/blob/master/eureka-3.png)
 
 
 + API Gateway(Zuul)를 이용한 Rest 통신 테스트(postman 이용)
 
-![apigateway-test01.png](https://github.com/suhojang/SpringCloudNetflix/apigateway-test01.png)
+![apigateway-test01.png](https://github.com/suhojang/SpringCloudNetflix/blob/master/apigateway-test01.png)
 
 위 그림과 같이 정상적으로 데이터를 응답 받는 것을 확인 할 수 있다.
 
